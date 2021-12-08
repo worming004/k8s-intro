@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: hello-rs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: hello
+  template:
+    metadata:
+      labels:
+        name: hello
+    spec:
+      containers:
+        - name: hello
+          image: worming/http-helloworld
+          ports:
+            - containerPort: 8000
