@@ -21,3 +21,10 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 8000
+        startupProbe:
+          httpGet:
+            path: "/readyz"
+            port: 8000
+          periodSeconds: 2
+          initialDelaySeconds: 8
+        imagePullPolicy: Always

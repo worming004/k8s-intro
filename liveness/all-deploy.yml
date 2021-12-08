@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: liveness
+spec:
+  selector:
+    app: liveness
+  ports:
+  - port: 8000
+    targetPort: 8000
+  type: LoadBalancer
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: liveness
+spec:
+  selector:
+    matchLabels:
+      app: liveness
+  template:
+    metadata:
+      labels:
+        app: liveness
+    spec:
+      containers:
+      - name: liveness
+        image: worming/http-liveness
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+        ports:
+        - containerPort: 8000
+

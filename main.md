@@ -52,7 +52,8 @@ Une ligne de commande pour déployer nginx :
 ## Un dashboard simple pour cette démo
 
 `kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended.yaml`
-naviguer sur http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/ (et sélectionner le fichier ~/.kube/.config)
+`kubectl proxy`
+naviguer sur http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/ (et lire ./dashboard/readme.md)
 
 ---
 
