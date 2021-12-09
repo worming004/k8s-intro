@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title> namespace: kubernetes-dashboard</title>
+		<title>recevoir le token de l&#39;utilisateur admin</title>
 		<style>
 			body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -70,25 +70,10 @@ code {
 	</head>
 	<body>
 		<textarea id="source">
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
- name: admin-user
- namespace: kubernetes-dashboard
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
- name: admin-user
-roleRef:
- apiGroup: rbac.authorization.k8s.io
- kind: ClusterRole
- name: cluster-admin
-subjects:
-- kind: ServiceAccount
-  name: admin-user
-  namespace: kubernetes-dashboard
+# recevoir le token de l'utilisateur admin
+
+`kubectl get secret -n kubernetes-dashboard $(kubectl get serviceaccount admin-user -n kubernetes-dashboard -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | base64 --decode`
+
 		</textarea>
 		<script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
 		<script>
