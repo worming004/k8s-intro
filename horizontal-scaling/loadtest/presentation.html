@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>builddeploy</title>
+		<title>main</title>
 		<style>
 			body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -70,10 +70,46 @@ code {
 	</head>
 	<body>
 		<textarea id="source">
-docker build -t worming/http-helloworld -t worming/http-helloworld:v1 -t worming/http-helloworld:v2 .
-docker push worming/http-helloworld 
-docker push worming/http-helloworld:v1
-docker push worming/http-helloworld:v2
+package main
+
+import (
+	"flag"
+	"fmt"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+)
+
+var address = flag.String("address", "http://20.82.159.140:8000/fib/45", "address to call")
+var nbr = flag.Int("number", 10, "number of worker to create")
+
+func main() {
+	flag.Parse()
+	for i := 0; i < *nbr; i++ {
+		w := worker{address: *address}
+		go w.work()
+	}
+
+	ossig := make(chan os.Signal, 1)
+	signal.Notify(ossig, syscall.SIGINT, syscall.SIGTERM)
+	v := <-ossig
+	fmt.Println(v)
+}
+
+type worker struct {
+	address string
+}
+
+func (w worker) work() {
+	for {
+		_, err := http.Get(w.address)
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+	}
+}
+
 		</textarea>
 		<script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
 		<script>

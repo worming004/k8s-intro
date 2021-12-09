@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>builddeploy</title>
+		<title>main_test</title>
 		<style>
 			body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -70,10 +70,38 @@ code {
 	</head>
 	<body>
 		<textarea id="source">
-docker build -t worming/http-helloworld -t worming/http-helloworld:v1 -t worming/http-helloworld:v2 .
-docker push worming/http-helloworld 
-docker push worming/http-helloworld:v1
-docker push worming/http-helloworld:v2
+package main
+
+import (
+	"net/http"
+	"net/http/httptest"
+	"testing"
+)
+
+func TestHealthCheck(t *testing.T) {
+	handlerBuilder := newHealthHandler()
+
+	isHealthyHandler := handlerBuilder.buildHealthHandler()
+	setUnhealthyHandler := handlerBuilder.setUnhealthyHandler()
+
+	recorder := httptest.NewRecorder()
+	isHealthyHandler.ServeHTTP(recorder, nil)
+
+	if recorder.Code != http.StatusOK {
+		t.Errorf("expecting default behavior as healthy")
+	}
+
+	recorder = httptest.NewRecorder()
+	setUnhealthyHandler(recorder, nil)
+
+	recorder = httptest.NewRecorder()
+	isHealthyHandler.ServeHTTP(recorder, nil)
+
+	if recorder.Code == http.StatusOK {
+		t.Errorf("expecting unhealthy after set")
+	}
+}
+
 		</textarea>
 		<script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
 		<script>
