@@ -1,12 +1,12 @@
 import os
+import subprocess
 
 def buildDeploy(root, _, f):
     rootName = root[2:]
     currentDir = os.getcwd()
     fp = os.path.join(os.getcwd(), rootName)
     os.chdir(fp)
-    print(fp)
-    os.system(f)
+    subprocess.call(['bash', './builddeploy.sh'])
     os.chdir(currentDir)
 
 def fileIs(fileName):
