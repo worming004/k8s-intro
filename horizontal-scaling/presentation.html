@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>readme</title>
+		<title>fibonacci service, non performant</title>
 		<style>
 			body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -70,10 +70,21 @@ code {
 	</head>
 	<body>
 		<textarea id="source">
-set autoscaler:
+## fibonacci service, non performant
+
+Avec une complexité de O(n^2), ne pas demander la valeur au dessus de 45, le service galèrera sa race :)
+
+---
+
+## set autoscaler
 
 kubectl autoscale deployment --namespace hpa horizontal-scaling --cpu-percent=30 --min=2 --max=5
 
+---
+
+## suite dans liveness
+
+---
 		</textarea>
 		<script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
 		<script>

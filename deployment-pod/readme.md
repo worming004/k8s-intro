@@ -35,3 +35,7 @@ déploiement d'un service : service.yml
 ## exemple de rolling-update
 
 `kubectl set image deployment hello hello=worming/http-helloworld:v2`
+
+---
+
+## suite horizontal-scaling
