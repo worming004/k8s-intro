@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>builddeploy</title>
+		<title>readme</title>
 		<style>
 			body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -70,8 +70,10 @@ code {
 	</head>
 	<body>
 		<textarea id="source">
-docker build -t worming/http-fibonacci .
-docker push worming/http-fibonacci
+set autoscaler:
+
+kubectl autoscale deployment --namespace hpa horizontal-scaling --cpu-percent=30 --min=2 --max=5
+
 		</textarea>
 		<script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
 		<script>
