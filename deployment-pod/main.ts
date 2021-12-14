@@ -1,4 +1,4 @@
-import { serve, delay ,Timeout, TimeoutError } from "./deps.ts";
+import { serve ,Timeout } from "./deps.ts";
 
 const PORT = 8000;
 
@@ -16,8 +16,10 @@ Timeout.wait(10000)
 console.log(`Server started on port ${PORT}`);
 for await (const req of s) {
   console.log('request received')
+
   if (req.url == '/readyz' && !isReady) {
     req.respond({status: 400, body: notReadyBody})
   }
+  
   req.respond({ body });
 }
