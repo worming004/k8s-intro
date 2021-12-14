@@ -1,6 +1,6 @@
 # déploiement simple
 
-Il est rare que l'on utilise directement la resource pod ou replica set. Nous utilisons couremment le déploiement et le service
+Il est rare que l'on utilise directement la resource pod ou replica set. Nous utilisons couramment le déploiement et le service
 
 ---
 
@@ -13,7 +13,7 @@ on utilise rarement un pod nous même
 
 ## exemple replica set
 
-déploiement du replica set, et donc de plusieurs pods : replicaset.yml
+déploiement du replica set, et donc de plusieurs pods identique : replicaset.yml
 on utilise rarement un replica set nous même
 
 ---
