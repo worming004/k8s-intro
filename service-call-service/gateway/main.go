@@ -8,11 +8,13 @@ import (
 	"github.com/gorilla/mux"
 )
 
+const url string = "http://http-backend/hello"
+
 type backendProxy struct {
 }
 
 func (bp backendProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	res, err := http.Get("http://http-backend/hello")
+	res, err := http.Get(url)
 	if err != nil {
 		panic(err)
 	}
@@ -32,5 +34,7 @@ func main() {
 		w.Write([]byte("ok"))
 	}).Methods("GET")
 
-	http.ListenAndServe(":8080", mux)
+	port := ":8080"
+	fmt.Println("listen on port " + port)
+	http.ListenAndServe(port, mux)
 }

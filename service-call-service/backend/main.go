@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -9,9 +10,13 @@ import (
 func main() {
 	mux := mux.NewRouter()
 
-	mux.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("hello world"))
-	}).Methods("GET")
+	mux.HandleFunc("/hello", helloWorldHandlerFunc).Methods("GET")
 
-	http.ListenAndServe(":8080", mux)
+	port := ":8080"
+	fmt.Println("listen on port " + port)
+	http.ListenAndServe(port, mux)
+}
+
+func helloWorldHandlerFunc(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("hello world\n"))
 }
